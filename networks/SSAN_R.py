@@ -23,21 +23,21 @@ class Discriminator(nn.Module):
         adversarial_out = self.ad_net(self.grl_layer(feature))
         return adversarial_out
     
-class NormedLogisticRegression(nn.Module):
-    def __init__(self, in_dim:int=512, out_dim:int=2):
-        super(NormedLogisticRegression, self).__init__()
+# class NormedLogisticRegression(nn.Module):
+#     def __init__(self, in_dim:int=512, out_dim:int=2):
+#         super(NormedLogisticRegression, self).__init__()
 
-        self.weight = nn.Parameter(torch.Tensor(out_dim, in_dim))
-        self.reset_parameters()
+#         self.weight = nn.Parameter(torch.Tensor(out_dim, in_dim))
+#         self.reset_parameters()
  
-    def reset_parameters(self) -> None:
-        nn.init.kaiming_uniform_(self.weight, a=math.sqrt(5))
+#     def reset_parameters(self) -> None:
+#         nn.init.kaiming_uniform_(self.weight, a=math.sqrt(5))
 
-    def forward(self, x:torch.Tensor):
-        x_norm = F.normalize(x, dim=1)
-        w_norm =  F.normalize(self.weight, dim=1)
-        logit = F.linear(x_norm, w_norm)
-        return logit
+#     def forward(self, x:torch.Tensor):
+#         x_norm = F.normalize(x, dim=1)
+#         w_norm =  F.normalize(self.weight, dim=1)
+#         logit = F.linear(x_norm, w_norm)
+#         return logit
 
 
 class SSAN_R(nn.Module):
@@ -67,7 +67,8 @@ class SSAN_R(nn.Module):
             nn.Conv2d(256, 512, kernel_size=3, stride=2, padding=1, bias=False),
             nn.BatchNorm2d(512)
         )
-        self.cls_head = NormedLogisticRegression(conv_final_output, cls_head_output)
+        # self.cls_head = NormedLogisticRegression(conv_final_output, cls_head_output)
+        self.cls_head = nn.Linear(512, 2, bias=True)
 
         self.gamma = nn.Linear(256, 256, bias=False)
         self.beta = nn.Linear(256, 256, bias=False)

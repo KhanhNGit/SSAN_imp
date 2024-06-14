@@ -3,7 +3,7 @@ import numpy as np
 import random
 import torch.nn as nn
 
-def _seed_all(random_seed=1226):
+def seed_all(random_seed=1226):
     torch.manual_seed(random_seed)
     torch.cuda.manual_seed(random_seed)
     # torch.cuda.manual_seed_all(random_seed)  # if use multi-GPU
@@ -54,10 +54,10 @@ def binary_func_sep(logits, label, UUID,
     indx_0 = (UUID == 0).cpu()
     if indx_0.sum().item() > 0:
         logit_0 = logits[indx_0].squeeze()
-        cls_loss_0 = ce_loss(logit_0, label[indx_0])
+        cls_loss_0 = ce_loss(logit_0, label[indx_0][:,0])
         predicted_0 = (logit_0[:,1] > 0.5).float()
         total_0 += len(logit_0)
-        correct_0 += predicted_0.cpu().eq(label[indx_0].cpu()).sum().item()
+        correct_0 += predicted_0.cpu().eq(label[indx_0][:,0].cpu()).sum().item()
     else:
         logit_0 = []
         cls_loss_0 = torch.zeros(1).cuda()
@@ -65,10 +65,10 @@ def binary_func_sep(logits, label, UUID,
     indx_1 = (UUID == 1).cpu()
     if indx_1.sum().item() > 0:
         logit_1 =  logits[indx_1].squeeze()
-        cls_loss_1 = ce_loss(logit_1, label[indx_1])
+        cls_loss_1 = ce_loss(logit_1, label[indx_1][:,0])
         predicted_1 = (logit_1[:,1] > 0.5).float()
         total_1 += len(logit_1)
-        correct_1 += predicted_1.cpu().eq(label[indx_1].cpu()).sum().item()
+        correct_1 += predicted_1.cpu().eq(label[indx_1][:,0].cpu()).sum().item()
     else:
         logit_1 = []
         cls_loss_1 = torch.zeros(1).cuda()
@@ -76,10 +76,10 @@ def binary_func_sep(logits, label, UUID,
     indx_2 = (UUID == 2).cpu()
     if indx_2.sum().item() > 0:
         logit_2 =  logits[indx_2].squeeze()
-        cls_loss_2 = ce_loss(logit_2, label[indx_2])
+        cls_loss_2 = ce_loss(logit_2, label[indx_2][:,0])
         predicted_2 = (logit_2[:,1] > 0.5).float()
         total_2 += len(logit_2)
-        correct_2 += predicted_2.cpu().eq(label[indx_2].cpu()).sum().item()
+        correct_2 += predicted_2.cpu().eq(label[indx_2][:,0].cpu()).sum().item()
     else:
         logit_2 = []
         cls_loss_2 = torch.zeros(1).cuda()

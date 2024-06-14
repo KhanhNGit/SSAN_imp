@@ -17,7 +17,7 @@ def parse_args():
     parser.add_argument('--num_epochs', type=int, default=500, help='total training epochs')
     parser.add_argument('--print_freq', type=int, default=20, help='print frequency')
     parser.add_argument('--warming_epochs', type=int, default=1, help='how many epochs model warming up')
-    parser.add_argument('--warming_minimizer', type=int, default=5, help='how many epochs model warming up')
+    parser.add_argument('--warming_minimizer', type=int, default=2, help='how many epochs model warming up')
     parser.add_argument('--minimizer_rho', type=float, default=0.1, help='determine rho minimizer')
     parser.add_argument('--minimizer_eta', type=float, default=0.01, help='determine eta minimizer')
     parser.add_argument('--minimizer_alpha', type=float, default=0.0002, help='determine alpha minimizer')

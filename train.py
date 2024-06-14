@@ -37,7 +37,7 @@ def main(args):
         momentum=args.momentum, 
         weight_decay=args.weight_decay)
     # def scheduler
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max_iter, eta_min=1e-5, verbose=True)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max_iter, eta_min=1e-5)
     # model = nn.DataParallel(model).cuda()
 
     #def minimize
@@ -226,4 +226,5 @@ def validate(model, test_loader, score_root_path, epoch, name=""):
 if __name__ == '__main__':
     args = parse_args()
     os.environ["CUDA_VISIBLE_DEVICES"] = args.device
+    seed_all()
     main(args=args)
