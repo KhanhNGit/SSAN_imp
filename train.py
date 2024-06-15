@@ -104,12 +104,12 @@ def main(args):
             contrast_label = label[:, 0].long() == label[rand_idx, 0].long()
             contrast_label = torch.where(contrast_label==True, 1, -1)
             constra_loss = contra_fun(fea_x1_x1, fea_x1_x2, contrast_label)
-            adv_loss = binary_fuc(domain_invariant, UUID.long())
+            adv_loss = binary_fuc(domain_invariant, UUID.long()) * args.lamda_adv
 
 
             if (epoch >= args.warming_minimizer):
                 model.zero_grad()
-                assert isinstance(cls_loss, list) and len(cls_loss)==len(args.num_dataset_train), f"List loss for domain is not provided"            
+                assert isinstance(cls_loss, list) and len(cls_loss)==args.num_dataset_train, f"List loss for domain is not provided"            
                 for idx_domain in range(args.num_dataset_train):
                     if cls_loss[idx_domain].item() != 0:
                         cls_loss[idx_domain].backward(retain_graph=True)

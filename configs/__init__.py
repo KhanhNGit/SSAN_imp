@@ -22,6 +22,7 @@ def parse_args():
     parser.add_argument('--minimizer_eta', type=float, default=0.01, help='determine eta minimizer')
     parser.add_argument('--minimizer_alpha', type=float, default=0.0002, help='determine alpha minimizer')
     parser.add_argument('--trans', type=str, default="I", help="different pre-process")
+    parser.add_argument('--lamda_adv', type=float, default=0.5, help='adv loss weight')
     # optimizer
     parser.add_argument('--momentum', type=float, default=0.9, help='optimizer momentum')
     parser.add_argument('--optimizer', type=str, default='adam', help='optimizer')
